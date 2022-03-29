@@ -6,14 +6,17 @@ import { GET_POSTS } from '../api'
 import Post from '../components/Post'
 
 const Posts = () => {
-  const { data, error } = useQuery(GET_POSTS)
-  console.log(error)
+  const { data, error, loading } = useQuery(GET_POSTS)
+  if (loading) return <h1>Loading...</h1>
 
-  const { posts } = data
+  if (error) {
+    console.log(error)
+    return <h1>error</h1>
+  }
 
   return (
       <><div>
-          {posts.map((post: any) => {
+          {data && data.posts.map((post: any) => {
             return (
                   <Post
                       key={post.id}
